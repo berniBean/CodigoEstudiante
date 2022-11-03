@@ -2,6 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using SistemaVenta.DAL.DBContext;
 using Microsoft.EntityFrameworkCore;
+using SistemaVenta.DAL.Interfaces;
+using SistemaVenta.DAL.Concretas;
+using SistemaVentas.BLL.Interfaces;
+using SistemaVentas.BLL.Implementacion;
 
 namespace SistemaVenta.IOC
 {
@@ -13,6 +17,13 @@ namespace SistemaVenta.IOC
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            Services.AddScoped<IVentaRepository, VentaRepository>();
+            Services.AddScoped<ICorreoService, CorreoService>();
+            Services.AddScoped<IFireBaseServices, FirebaseService>();
+            Services.AddScoped<IUtilidadesServices, UtilidadesServices>();
+            Services.AddScoped<IRolService, RolService>();
         }
     }
 }

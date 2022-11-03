@@ -25,11 +25,11 @@ namespace SistemaVenta.DAL.DBContext
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("server=EFLORESPLAP\\SQLEXPRESS;Database=VentasDB; Trusted_Connection=True");
-            }
+            //base.OnConfiguring(optionsBuilder);
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer("server=EFLORESPLAP\\SQLEXPRESS;Database=VentasDB; Trusted_Connection=True");
+            //}
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

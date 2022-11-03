@@ -17,6 +17,8 @@
         public Guid IdTipoDocumentoVenta { get; set; }
         public TipoDocumentoVenta TipoDocumentosVentasNav { get; set; }
 
+        public IEnumerable<DetalleVenta> DetalleVenta { get; set; }
+
 
 
 
