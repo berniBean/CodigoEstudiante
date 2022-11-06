@@ -15,6 +15,7 @@ namespace SistemaVenta.Entity.Configuraciones
         {
             
             builder.HasKey(prop => new { prop.RolId, prop.MenuId });
+            builder.Property(prop => prop.FechaRegistro).HasDefaultValueSql("(getdate())");
         }
     }
 }

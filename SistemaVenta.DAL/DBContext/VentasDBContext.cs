@@ -20,8 +20,10 @@ namespace SistemaVenta.DAL.DBContext
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<Usuario>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
+            modelBuilder.Entity<Rol>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
+            modelBuilder.Entity<TipoDocumentoVenta>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
 
-            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,7 +39,12 @@ namespace SistemaVenta.DAL.DBContext
             base.ConfigureConventions(configurationBuilder);
             configurationBuilder.Properties<string>().HaveMaxLength(100);
             configurationBuilder.Properties<decimal>().HavePrecision(10, 2);
+            configurationBuilder.Properties<DateTime>().HaveColumnType("DateTime");
             
+
+
+
+
         }
 
         public DbSet<Categoria>Categorias { get; set; }

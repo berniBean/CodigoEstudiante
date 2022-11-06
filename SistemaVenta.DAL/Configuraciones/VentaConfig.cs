@@ -11,6 +11,7 @@ namespace SistemaVenta.Entity.Configuraciones
             builder.Property(prop => prop.NumeroVenta).HasMaxLength(6);
             builder.Property(prop => prop.DocumentoCliente).HasMaxLength(10);
             builder.Property(prop => prop.NombreCliente).HasMaxLength(20);
+            builder.Property(prop => prop.FechaRegistro).HasDefaultValueSql("(getdate())");
         }
     }
 }

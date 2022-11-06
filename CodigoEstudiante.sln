@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaVenta.IOC", "Sistema
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCVentas", "MVCVentas\MVCVentas.csproj", "{5FE50B95-510D-4784-BFD8-8812A1309881}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaVentas.BLL", "SistemaVentas.BLL\SistemaVentas.BLL.csproj", "{9C431C19-EAAD-44DE-B309-FC90082DFD2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaVenta.BLL", "SistemaVentas.BLL\SistemaVenta.BLL.csproj", "{9C431C19-EAAD-44DE-B309-FC90082DFD2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,8 +12,8 @@ using SistemaVenta.DAL.DBContext;
 namespace SistemaVenta.DAL.Migrations
 {
     [DbContext(typeof(VentasDBContext))]
-    [Migration("20221102055131_colleccionDetalle")]
-    partial class colleccionDetalle
+    [Migration("20221106010910_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,17 +76,14 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CategoriaProducto")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("DescripcionProducto")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MarcaProducto")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -117,33 +114,50 @@ namespace SistemaVenta.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Controlador")
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("controlador");
+
                     b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("descripcion");
 
                     b.Property<bool>("EsActivo")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("esActivo");
 
                     b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasColumnName("fechaRegistro")
+                        .HasDefaultValueSql("(getdate())");
 
                     b.Property<string>("Icono")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("icono");
 
                     b.Property<Guid>("IdMenuPadre")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("idMenuPadre");
 
                     b.Property<string>("PaginaAccion")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("paginaAccion");
 
-                    b.HasKey("MenuId");
+                    b.HasKey("MenuId")
+                        .HasName("PK__Menu__C26AF48353DB2DAF");
 
-                    b.ToTable("Menus");
+                    b.HasIndex("IdMenuPadre");
+
+                    b.ToTable("Menu", (string)null);
                 });
 
             modelBuilder.Entity("SistemaVenta.Entity.Models.Negocio", b =>
@@ -153,27 +167,22 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Correo")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Direccion")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NombreDocumento")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NombreLogo")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -182,17 +191,14 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("SimboloMoneda")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UrlNegocio")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -207,18 +213,17 @@ namespace SistemaVenta.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CantidadDigitos")
+                    b.Property<int?>("CantidadDigitos")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FechaActualizacion")
+                    b.Property<DateTime?>("FechaActualizacion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Gestion")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UltimoNumero")
+                    b.Property<int?>("UltimoNumero")
                         .HasColumnType("int");
 
                     b.HasKey("NumeroCorrelativoId");
@@ -236,12 +241,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CodigoDeBarra")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -252,12 +255,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Marca")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NombreImagen")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -269,7 +270,6 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UrlImagen")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .IsUnicode(false)
                         .HasColumnType("varchar(500)");
@@ -317,6 +317,9 @@ namespace SistemaVenta.DAL.Migrations
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdRolMenu")
+                        .HasColumnType("int");
+
                     b.HasKey("RolId", "MenuId");
 
                     b.HasIndex("MenuId");
@@ -353,12 +356,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Clave")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Correo")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -369,7 +370,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NombreFoto")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -377,12 +381,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UrlFoto")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -400,7 +402,6 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DocumentoCliente")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -415,12 +416,10 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("NombreCliente")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("NumeroVenta")
-                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
@@ -428,7 +427,7 @@ namespace SistemaVenta.DAL.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<Guid>("TipoDocumentosVentasNavTipoDocumentoVentaId")
+                    b.Property<Guid?>("TipoDocumentosVentasNavTipoDocumentoVentaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Total")
@@ -456,6 +455,17 @@ namespace SistemaVenta.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Ventas");
+                });
+
+            modelBuilder.Entity("SistemaVenta.Entity.Models.Menu", b =>
+                {
+                    b.HasOne("SistemaVenta.Entity.Models.Menu", "IdMenuPadreNavigation")
+                        .WithMany("InverseIdMenuPadreNavigation")
+                        .HasForeignKey("IdMenuPadre")
+                        .IsRequired()
+                        .HasConstraintName("FK__Menu__idMenuPadr__36B12243");
+
+                    b.Navigation("IdMenuPadreNavigation");
                 });
 
             modelBuilder.Entity("SistemaVenta.Entity.Models.Producto", b =>
@@ -490,22 +500,20 @@ namespace SistemaVenta.DAL.Migrations
 
             modelBuilder.Entity("SistemaVenta.Entity.Models.Usuario", b =>
                 {
-                    b.HasOne("SistemaVenta.Entity.Models.Rol", "UsuarioNav")
+                    b.HasOne("SistemaVenta.Entity.Models.Rol", "RolNav")
                         .WithMany("Usuarios")
                         .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UsuarioNav");
+                    b.Navigation("RolNav");
                 });
 
             modelBuilder.Entity("SistemaVenta.Entity.Models.Venta", b =>
                 {
                     b.HasOne("SistemaVenta.Entity.Models.TipoDocumentoVenta", "TipoDocumentosVentasNav")
                         .WithMany("Ventas")
-                        .HasForeignKey("TipoDocumentosVentasNavTipoDocumentoVentaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TipoDocumentosVentasNavTipoDocumentoVentaId");
 
                     b.HasOne("SistemaVenta.Entity.Models.Usuario", "UsuarioNav")
                         .WithMany("Ventas")
@@ -525,6 +533,8 @@ namespace SistemaVenta.DAL.Migrations
 
             modelBuilder.Entity("SistemaVenta.Entity.Models.Menu", b =>
                 {
+                    b.Navigation("InverseIdMenuPadreNavigation");
+
                     b.Navigation("RolMenus");
                 });
 

@@ -28,7 +28,7 @@ namespace SistemaVentas.BLL.Implementacion
 
             return query.Include(r => r.RolNav).ToList();
         }
-        public async Task<Usuario> Crear(Usuario usuario, Stream Foto = null, string NombreFoto = null, string UrlPlantillaCorreo = "")
+        public async Task<Usuario> Crear(Usuario usuario, Stream? Foto = null, string? NombreFoto = null, string UrlPlantillaCorreo = "")
         {
             Usuario usuario_existe = await _repository.Obtener(u => u.Correo.Equals(usuario.Correo));
 

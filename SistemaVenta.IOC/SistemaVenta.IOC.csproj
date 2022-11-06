@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\sistemaventa.DAL\SistemaVenta.DAL.csproj" />
-    <ProjectReference Include="..\SistemaVentas.BLL\SistemaVentas.BLL.csproj" />
+    <ProjectReference Include="..\SistemaVentas.BLL\SistemaVenta.BLL.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

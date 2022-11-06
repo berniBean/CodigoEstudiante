@@ -14,6 +14,7 @@ namespace SistemaVenta.Entity.Configuraciones
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
             builder.HasKey(prop => prop.CategoriaId);
+            builder.Property(p=>p.FechaRegistro).HasDefaultValueSql("(getdate())");
         }
     }
 }

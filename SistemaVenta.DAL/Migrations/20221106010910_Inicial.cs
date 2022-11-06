@@ -36,20 +36,26 @@ namespace SistemaVenta.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Menus",
+                name: "Menu",
                 columns: table => new
                 {
                     MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    IdMenuPadre = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Icono = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PaginaAccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    EsActivo = table.Column<bool>(type: "bit", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    descripcion = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
+                    idMenuPadre = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    icono = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
+                    controlador = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
+                    paginaAccion = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
+                    esActivo = table.Column<bool>(type: "bit", nullable: false),
+                    fechaRegistro = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Menus", x => x.MenuId);
+                    table.PrimaryKey("PK__Menu__C26AF48353DB2DAF", x => x.MenuId);
+                    table.ForeignKey(
+                        name: "FK__Menu__idMenuPadr__36B12243",
+                        column: x => x.idMenuPadre,
+                        principalTable: "Menu",
+                        principalColumn: "MenuId");
                 });
 
             migrationBuilder.CreateTable(
@@ -57,15 +63,15 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     NegocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UrlNegocio = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NombreLogo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NombreDocumento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    UrlNegocio = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NombreLogo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NombreDocumento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     PorcentajeImpuestos = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    SimboloMoneda = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    SimboloMoneda = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,10 +83,10 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     NumeroCorrelativoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UltimoNumero = table.Column<int>(type: "int", nullable: false),
-                    CantidadDigitos = table.Column<int>(type: "int", nullable: false),
-                    Gestion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FechaActualizacion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UltimoNumero = table.Column<int>(type: "int", nullable: true),
+                    CantidadDigitos = table.Column<int>(type: "int", nullable: true),
+                    Gestion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaActualizacion = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,11 +126,12 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     ProductoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CodigoDeBarra = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Marca = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    UrlImagen = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: false),
-                    NombreImagen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CodigoDeBarra = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Marca = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UrlImagen = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true),
+                    NombreImagen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Precio = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EsActivo = table.Column<bool>(type: "bit", nullable: false),
@@ -147,6 +154,7 @@ namespace SistemaVenta.DAL.Migrations
                 {
                     RolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdRolMenu = table.Column<int>(type: "int", nullable: false),
                     EsActivo = table.Column<bool>(type: "bit", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -154,9 +162,9 @@ namespace SistemaVenta.DAL.Migrations
                 {
                     table.PrimaryKey("PK_RolesMenus", x => new { x.RolId, x.MenuId });
                     table.ForeignKey(
-                        name: "FK_RolesMenus_Menus_MenuId",
+                        name: "FK_RolesMenus_Menu_MenuId",
                         column: x => x.MenuId,
-                        principalTable: "Menus",
+                        principalTable: "Menu",
                         principalColumn: "MenuId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -172,12 +180,13 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Correo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    UrlFoto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Clave = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     RolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UrlFoto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NombreFoto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Clave = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     EsActivo = table.Column<bool>(type: "bit", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -197,16 +206,16 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     VentaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumeroVenta = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    DocumentoCliente = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    NombreCliente = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    NumeroVenta = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    DocumentoCliente = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    NombreCliente = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     SubTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     ImpuestoTotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdTipoDocumentoVenta = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoDocumentosVentasNavTipoDocumentoVentaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TipoDocumentosVentasNavTipoDocumentoVentaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -215,8 +224,7 @@ namespace SistemaVenta.DAL.Migrations
                         name: "FK_Ventas_TiposDocumentosVentas_TipoDocumentosVentasNavTipoDocumentoVentaId",
                         column: x => x.TipoDocumentosVentasNavTipoDocumentoVentaId,
                         principalTable: "TiposDocumentosVentas",
-                        principalColumn: "TipoDocumentoVentaId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TipoDocumentoVentaId");
                     table.ForeignKey(
                         name: "FK_Ventas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
@@ -230,10 +238,10 @@ namespace SistemaVenta.DAL.Migrations
                 columns: table => new
                 {
                     DetalleVentaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MarcaProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DescripcionProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CategoriaProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Cantidad = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    MarcaProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DescripcionProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CategoriaProducto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     ProductoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -254,6 +262,11 @@ namespace SistemaVenta.DAL.Migrations
                 name: "IX_DetalleVentas_VentaId",
                 table: "DetalleVentas",
                 column: "VentaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menu_idMenuPadre",
+                table: "Menu",
+                column: "idMenuPadre");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_CategoriaId",
@@ -308,7 +321,7 @@ namespace SistemaVenta.DAL.Migrations
                 name: "Categorias");
 
             migrationBuilder.DropTable(
-                name: "Menus");
+                name: "Menu");
 
             migrationBuilder.DropTable(
                 name: "TiposDocumentosVentas");

@@ -10,7 +10,8 @@ namespace SistemaVenta.Entity.Configuraciones
         {
             builder.Property(prop => prop.UrlImagen).HasMaxLength(500)
                 .IsUnicode(false);
-            
+            builder.Property(prop=>prop.FechaRegistro).HasDefaultValueSql("(getdate())");
+
         }
     }
 }
