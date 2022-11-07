@@ -21,6 +21,8 @@ namespace SistemaVenta.DAL.DBContext
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<Usuario>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
+            modelBuilder.Entity<Usuario>().Property(u => u.UrlFoto).IsUnicode(false);
+            modelBuilder.Entity<Usuario>().Property(u => u.UrlFoto).HasMaxLength(500);
             modelBuilder.Entity<Rol>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
             modelBuilder.Entity<TipoDocumentoVenta>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
 
@@ -38,6 +40,7 @@ namespace SistemaVenta.DAL.DBContext
         {
             base.ConfigureConventions(configurationBuilder);
             configurationBuilder.Properties<string>().HaveMaxLength(100);
+            
             configurationBuilder.Properties<decimal>().HavePrecision(10, 2);
             configurationBuilder.Properties<DateTime>().HaveColumnType("DateTime");
             

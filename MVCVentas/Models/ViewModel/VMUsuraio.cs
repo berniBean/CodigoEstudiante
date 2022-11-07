@@ -3,8 +3,8 @@
     public class VMUsuraio
     {
         
-        public Guid UsuarioId { get; set; }
-        public Guid RolId { get; set; }
+        public string? UsuarioId { get; set; }
+        public string? RolId { get; set; }
         public string? NombreRol { get; set; }   
         public string? Nombre { get; set; }
         public string? Correo { get; set; }

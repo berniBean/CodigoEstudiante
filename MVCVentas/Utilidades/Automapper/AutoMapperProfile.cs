@@ -21,6 +21,8 @@ namespace MVCVentas.Utilidades.Automapper
                 opt => opt.MapFrom(origen => origen.RolNav.Descripcion));
 
             CreateMap<VMUsuraio, Usuario>()
+                .ForMember(destino=>destino.UsuarioId,
+                opt=>opt.MapFrom(origen => Guid.Empty))
                 .ForMember(dest => dest.EsActivo,
                 opt => opt.MapFrom(o => o.EsActivo == 1 ? true : false))
                 .ForMember(dest => dest.RolNav,

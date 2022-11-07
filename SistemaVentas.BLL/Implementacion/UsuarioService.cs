@@ -40,6 +40,7 @@ namespace SistemaVentas.BLL.Implementacion
             try
             {
                 string clave = _utilidades.GenerarClave();
+                usuario.UsuarioId = Guid.NewGuid();
                 usuario.Clave = _utilidades.ConversionSha256(clave);
                 usuario.NombreFoto = NombreFoto;
 
