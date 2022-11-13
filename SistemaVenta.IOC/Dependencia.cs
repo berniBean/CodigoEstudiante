@@ -6,6 +6,8 @@ using SistemaVenta.DAL.Interfaces;
 using SistemaVenta.DAL.Concretas;
 using SistemaVentas.BLL.Interfaces;
 using SistemaVentas.BLL.Implementacion;
+using SistemaVenta.BLL.Interfaces;
+using SistemaVenta.BLL.Implementacion;
 
 namespace SistemaVenta.IOC
 {
@@ -25,6 +27,8 @@ namespace SistemaVenta.IOC
             Services.AddScoped<IUtilidadesServices, UtilidadesServices>();
             Services.AddScoped<IRolService, RolService>();
             Services.AddScoped<IUsuarioService, UsuarioService>();
+            Services.AddScoped<INegocioService, NegocioService>();
+            Services.AddScoped<ICategoriaService, CategoriaService>();
         }
     }
 }
