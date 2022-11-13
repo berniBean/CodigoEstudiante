@@ -123,13 +123,14 @@ namespace MVCVentas.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Editar(Guid IdUsuario)
+        public async Task<IActionResult> Eliminar(string IdUsuario)
         {
             GenericResponse<string> genericResponse = new GenericResponse<string>();
 
             try
             {
-                genericResponse.Estado =  await _usuarioService.Eliminar(IdUsuario);
+                var id= new Guid(IdUsuario);
+                genericResponse.Estado =  await _usuarioService.Eliminar(id);
             }
             catch (Exception ex)
             {

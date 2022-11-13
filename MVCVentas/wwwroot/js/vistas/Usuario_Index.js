@@ -1,5 +1,5 @@
 ﻿const MODELO_BASE = {
-    UsuarioId: "",
+    usuarioId: "",
     nombre: "",
     correo: "",
     telefono: "",
@@ -48,9 +48,9 @@ $(document).ready(function () {
              {
                  "data": "esActivo", render: function (data) {
                      if (data == 1)
-                         return '<span class="badge bagde-info">Activo</span>';
+                         return '<span class="badge badge-info">Activo</span>';
                      else
-                         return '<span class="badge bagde-danger">Inactivo</span>';
+                         return '<span class="badge badge-danger">Inactivo</span>';
                  }
              },
              {
@@ -81,8 +81,7 @@ $(document).ready(function () {
 })
 
 function mostrarModal(modelo = MODELO_BASE) {
-    debugger;
-    $("#txtId").val(modelo.UsuarioId)
+    $("#txtId").val(modelo.usuarioId)
     $("#txtNombre").val(modelo.nombre)
     $("#txtCorreo").val(modelo.correo)
     $("#txtTelefono").val(modelo.telefono)
@@ -109,9 +108,9 @@ $("#btnGuardar").click(function () {
         $(`input[name="${inputs_sin_valor[0].name}"]`).focus()
         return;
     }
-    debugger;
+    
     const modelo = structuredClone(MODELO_BASE);
-    modelo["UsuarioId"] = $("#txtId").val()
+    modelo["usuarioId"] = $("#txtId").val()
     modelo["nombre"] = $("#txtNombre").val()
     modelo["correo"] = $("#txtCorreo").val()
     modelo["telefono"] = $("#txtTelefono").val()
@@ -125,9 +124,10 @@ $("#btnGuardar").click(function () {
     formData.append("modelo", JSON.stringify(modelo))
     
     $("#modalData").find("div.modal-content").LoadingOverlay("show");
-    
-    if (modelo.UsuarioId == "") {
-        debugger;
+   
+    console.log(modelo.usuarioId)
+    if (modelo.usuarioId == "") {
+        
         fetch("/Usuario/Crear", {
             method: "POST",
             body: formData
@@ -143,5 +143,85 @@ $("#btnGuardar").click(function () {
                 swal("¡Error!", responseJson.mensaje, "error")
             }
         })
+    } else {
+        fetch("/Usuario/Editar", {
+            method: "PUT",
+            body: formData
+        }).then(response => {
+            $("#modalData").find("div.modal-content").LoadingOverlay("hide");
+            return response.ok ? response.json() : Promise.reject(response);
+        }).then(responseJson => {
+            if (responseJson.estado) {
+                tablaData.row(filaSeleccionada).data(responseJson.objeto).draw(false);
+                filaSeleccionada = null
+                $("#modalData").modal("hide")
+                swal("¡Listo!", "El usuario fue modificado", "success")
+            } else {
+                swal("¡Error!", responseJson.mensaje, "error")
+            }
+        })
     }
+})
+
+let filaSeleccionada;
+$("#tbdata tbody").on("click", ".btn-editar", function () {
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+
+    } else {
+        filaSeleccionada = $(this).closest("tr")
+    }
+    
+
+    const data = tablaData.row(filaSeleccionada).data()
+    mostrarModal(data);
+})
+
+
+$("#tbdata tbody").on("click", ".btn-eliminar", function () {
+    let fila;
+    if ($(this).closest("tr").hasClass("child")) {
+        fila = $(this).closest("tr").prev();
+
+    } else {
+        fila = $(this).closest("tr")
+    }
+
+
+    const data = tablaData.row(fila).data();
+    console.log(data.nombre);
+    swal({
+        title: "¿Está seguro?",
+        text: `Eliminar al usuario: "${data.nombre}"`,
+        type: "warning",
+
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "No, cancelar",
+        closeOnConfirm: false,
+        closeOnCancel:true
+    },
+        function (respuesta) {
+        if (respuesta) {
+            $(".showSweetAlert").LoadingOverlay("show");
+
+            fetch(`/Usuario/Eliminar?IdUsuario=${data.usuarioId}`, {
+                method: "DELETE"
+            }).then(response => {
+                $(".showSweetAlert").LoadingOverlay("hide");
+                return response.ok ? response.json() : Promise.reject(response);
+            }).then(responseJson => {
+                if (responseJson.estado) {
+                    tablaData.row(filaSeleccionada).remove().draw()
+                    swal("¡Listo!", "El Usuario fue eleminado", "success")
+                } else {
+                    swal("¡Error!", responseJson.mensaje, "success")
+                }
+
+
+            })
+        }
+    })
+    
 })

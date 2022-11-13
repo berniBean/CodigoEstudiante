@@ -21,8 +21,8 @@ namespace MVCVentas.Utilidades.Automapper
                 opt => opt.MapFrom(origen => origen.RolNav.Descripcion));
 
             CreateMap<VMUsuraio, Usuario>()
-                .ForMember(destino=>destino.UsuarioId,
-                opt=>opt.MapFrom(origen => Guid.Empty))
+                .ForMember(destino => destino.UsuarioId,
+                opt => opt.MapFrom(origen => origen.UsuarioId.Equals("") ? Guid.Empty : new Guid(origen.UsuarioId)))
                 .ForMember(dest => dest.EsActivo,
                 opt => opt.MapFrom(o => o.EsActivo == 1 ? true : false))
                 .ForMember(dest => dest.RolNav,
@@ -47,7 +47,9 @@ namespace MVCVentas.Utilidades.Automapper
 
             CreateMap<VMCategoria, Categoria>()
                 .ForMember(d => d.EsActivo,
-                opt => opt.MapFrom(o => o.EsActivo == 1 ? true : false));
+                opt => opt.MapFrom(o => o.EsActivo == 1 ? true : false))
+                .ForMember(destino => destino.CategoriaId,
+                opt => opt.MapFrom(origen => origen.CategoriaId.Equals("") ? Guid.Empty : new Guid(origen.CategoriaId)));
             #endregion
 
             #region Producto

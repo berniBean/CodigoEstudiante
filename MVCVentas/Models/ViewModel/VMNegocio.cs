@@ -3,9 +3,9 @@
     public class VMNegocio
     {
         public Guid NegocioId { get; set; }
-        public string? UrlNegocio { get; set; }//urlLogo
+        public string? UrlLogo { get; set; }//urlLogo
         public string? NombreLogo { get; set; }
-        public string? NombreDocumento { get; set; }
+        public string? NumeroDocumento { get; set; }
         public string? Nombre { get; set; }
         public string? Correo { get; set; }
         public string? Direccion { get; set; }
