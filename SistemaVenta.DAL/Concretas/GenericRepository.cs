@@ -18,7 +18,7 @@ namespace SistemaVenta.DAL.Concretas
         {
             try
             {
-                TEntity entidad = await _ventasDBContext.Set<TEntity>().FirstOrDefaultAsync(Filtro);
+                TEntity? entidad = await _ventasDBContext.Set<TEntity>().FirstOrDefaultAsync(Filtro);
                 return entidad;
             }
             catch (Exception)

@@ -22,10 +22,10 @@ namespace SistemaVenta.DAL.DBContext
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<Usuario>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
             modelBuilder.Entity<Usuario>().Property(u => u.UrlFoto).IsUnicode(false);
-            modelBuilder.Entity<Usuario>().Property(u => u.UrlFoto).HasMaxLength(500);
+            modelBuilder.Entity<Usuario>().Property(u => u.UrlFoto).HasMaxLength(1500);
             modelBuilder.Entity<Rol>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
             modelBuilder.Entity<TipoDocumentoVenta>().Property(u=>u.FechaRegistro).HasDefaultValueSql("(getdate())");
-
+            modelBuilder.Entity<Negocio>().Property(u => u.UrlLogo).HasMaxLength(1500);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

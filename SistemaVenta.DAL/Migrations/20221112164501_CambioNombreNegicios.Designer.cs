@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaVenta.DAL.DBContext;
 
@@ -11,9 +12,10 @@ using SistemaVenta.DAL.DBContext;
 namespace SistemaVenta.DAL.Migrations
 {
     [DbContext(typeof(VentasDBContext))]
-    partial class VentasDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221112164501_CambioNombreNegicios")]
+    partial class CambioNombreNegicios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,7 +188,7 @@ namespace SistemaVenta.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal?>("PorcentajeImpuestos")
+                    b.Property<decimal>("PorcentajeImpuestos")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
@@ -199,8 +201,8 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UrlLogo")
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("NegocioId");
 
@@ -395,9 +397,9 @@ namespace SistemaVenta.DAL.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UrlFoto")
-                        .HasMaxLength(1500)
+                        .HasMaxLength(500)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1500)");
+                        .HasColumnType("varchar(500)");
 
                     b.HasKey("UsuarioId");
 
