@@ -60,7 +60,7 @@ namespace SistemaVentas.BLL.Implementacion
                 {
                     UrlPlantillaCorreo = UrlPlantillaCorreo
                         .Replace("[correo]", usuarioCreado.Correo)
-                        .Replace("[Clave]", clave);
+                        .Replace("[clave]", clave);
 
                     string htmlCorreo = "";
 
@@ -117,6 +117,7 @@ namespace SistemaVentas.BLL.Implementacion
                 usuario_editar.Correo = usuario.Correo;
                 usuario_editar.Telefono = usuario.Telefono;
                 usuario_editar.RolId = usuario.RolId;
+                usuario_editar.EsActivo = usuario.EsActivo;
 
                 if( usuario_editar.NombreFoto == "")
                 {
