@@ -66,7 +66,8 @@ namespace MVCVentas.Controllers
 
                 string urlPlantillaCorreo = 
                     $"{this.Request.Scheme}://{this.Request.Host}/Plantilla/EnviarClave?correo=[correo]&clave=[clave]";
-                Usuario usuarioCreado = await _usuarioService.Crear(_mapper.Map<Usuario>(vmUsuraio), fotoStream, nombreFoto, urlPlantillaCorreo);
+                Usuario usuarioCreado = await _usuarioService
+                    .Crear(_mapper.Map<Usuario>(vmUsuraio), fotoStream, nombreFoto, urlPlantillaCorreo);
 
                 vmUsuraio = _mapper.Map<VMUsuraio>(usuarioCreado);
 

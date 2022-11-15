@@ -7,7 +7,7 @@ namespace SistemaVenta.BLL.Implementacion
 {
     public class CategoriaService : ICategoriaService
     {
-        public readonly IGenericRepository<Categoria> _GenericRepository;
+        private readonly IGenericRepository<Categoria> _GenericRepository;
 
         public CategoriaService(IGenericRepository<Categoria> genericRepository)
         {

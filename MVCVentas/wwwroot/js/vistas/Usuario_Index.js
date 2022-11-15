@@ -124,7 +124,7 @@ $("#btnGuardar").click(function () {
     formData.append("modelo", JSON.stringify(modelo))
     
     $("#modalData").find("div.modal-content").LoadingOverlay("show");
-   
+    debugger;
     console.log(modelo.usuarioId)
     if (modelo.usuarioId == "") {
         
