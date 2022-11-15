@@ -62,6 +62,10 @@ namespace MVCVentas.Utilidades.Automapper
                 opt => opt.MapFrom(o => Convert.ToString(o.Precio, new CultureInfo("es-MX"))));
 
             CreateMap<VMProducto, Producto>()
+                .ForMember(destino => destino.ProductoId,
+                opt=> opt.MapFrom(origen => origen.ProductoId.Equals("") ? Guid.Empty : new Guid(origen.ProductoId)))
+                .ForMember(destino => destino.CategoriaId,
+                opt=>opt.MapFrom(origen=>origen.CategoriaId.Equals("") ? Guid.Empty : new Guid(origen.CategoriaId)))
                 .ForMember(d => d.EsActivo,
                 opt => opt.MapFrom(o => o.EsActivo == 1 ? true : false))
                 .ForMember(d => d.CategoriaNav,
