@@ -2,8 +2,8 @@
 {
     public class VMProducto : ClaseActiva
     {
-        public string? ProductoId { get; set; }
-        public string? CategoriaId { get; set; }
+        public Guid ProductoId { get; set; }
+        public Guid CategoriaId { get; set; }
         public string NombreCategoria { get; set; }
         public string Marca { get; set; }
         public string Descripcion { get; set; }
