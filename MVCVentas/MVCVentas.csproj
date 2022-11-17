@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\vistas\Hitorial_Venta.js" />
     <Content Remove="wwwroot\js\vistas\Negocio_Index.js" />
     <Content Remove="wwwroot\js\vistas\Producto_Index.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\vistas\Hitorial_Venta.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\vistas\Negocio_Index.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\vistas\Hitorial_Venta.js" />
     <None Include="wwwroot\js\vistas\Negocio_Index.js" />
     <None Include="wwwroot\js\vistas\Producto_Index.js" />
   </ItemGroup>

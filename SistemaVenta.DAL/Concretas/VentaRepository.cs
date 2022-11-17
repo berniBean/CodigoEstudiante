@@ -21,7 +21,7 @@ namespace SistemaVenta.DAL.Concretas
         {
             Venta generada = new Venta();
 
-
+            
             using(var trans = _ventasDBContext.Database.BeginTransaction())
             {
                 try
@@ -47,6 +47,7 @@ namespace SistemaVenta.DAL.Concretas
 
                     numeroVenta = numeroVenta.Substring(numeroVenta.Length - int.Parse(correlativo.CantidadDigitos.ToString()),int.Parse(correlativo.CantidadDigitos.ToString()));
                     entidad.NumeroVenta = numeroVenta;
+                    await _ventasDBContext.AddAsync(entidad);
 
                     await _ventasDBContext.SaveChangesAsync();
 

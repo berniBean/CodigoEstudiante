@@ -1,9 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MVCVentas.Models.ViewModel;
+using MVCVentas.Utilidades.Response;
+using SistemaVenta.BLL.Interfaces;
+using SistemaVenta.Entity.Models;
 
 namespace MVCVentas.Controllers
 {
     public class VentaController : Controller
     {
+        private readonly ITipoDocumentoService _DocService;
+        
+        private readonly IVentaService _VentaService;
+        private readonly IMapper _mapper;
+
+        public VentaController(ITipoDocumentoService docService, IVentaService ventaService, IMapper mapper)
+        {
+            _DocService = docService;
+            _VentaService = ventaService;
+            _mapper = mapper;
+        }
+
         public IActionResult NuevaVenta()
         {
             return View();
@@ -12,6 +29,64 @@ namespace MVCVentas.Controllers
         public IActionResult HistorialVenta()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListaTipoDocumentoVenta()
+        {
+            List<VMTipoDocumentoDeVenta> vmTipoDocVenta = _mapper
+                .Map<List<VMTipoDocumentoDeVenta>>(await _DocService.Lista());
+
+            return StatusCode(StatusCodes.Status200OK, vmTipoDocVenta);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerProductos(string busqueda)
+        {
+            List<VMProducto> vmListaProductos = _mapper
+                .Map<List<VMProducto>>(await _VentaService.ObtenerProductos(busqueda));
+
+            return StatusCode(StatusCodes.Status200OK, vmListaProductos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarVenta([FromBody] VMVenta modelo)
+        {
+            GenericResponse<VMVenta> gResponse = new GenericResponse<VMVenta>();
+
+
+            try
+            {
+                
+
+                modelo.UsuarioId = "E2D0F97D-2EF8-44FB-89B0-08DDEE02CBB6";
+                modelo.VentaId = Guid.NewGuid().ToString();
+
+                var venta = await _VentaService.Registrar(_mapper.Map<Venta>(modelo));
+                modelo = _mapper.Map<VMVenta>(venta);
+
+                gResponse.Estado = true;
+                gResponse.Objeto = modelo;
+
+            }
+            catch (Exception ex)
+            {
+                gResponse.Estado = true;
+                gResponse.Mensaje = ex.Message;
+                throw;
+            }
+
+
+            return StatusCode(StatusCodes.Status200OK, gResponse);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Historial(string numeroVenta, string fechaInicio, string fechaFin)
+        {
+            List<VMVenta> historialVenta = _mapper
+                .Map<List<VMVenta>>(await _VentaService.Historial(numeroVenta,fechaInicio,fechaFin));
+
+            return StatusCode(StatusCodes.Status200OK, historialVenta);
         }
     }
 }

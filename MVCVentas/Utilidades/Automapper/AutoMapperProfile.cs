@@ -29,7 +29,38 @@ namespace MVCVentas.Utilidades.Automapper
                 opt => opt.Ignore());
 
             #endregion
+            #region Venta
+            CreateMap<Venta, VMVenta>()
+                .ForMember(d => d.TipoDocumentoVenta,
+                opt => opt.MapFrom(o => o.TipoDocumentosVentasNav.Descripcion))
+                .ForMember(d => d.Usuario,
+                opt => opt.MapFrom(o => o.UsuarioNav.Nombre))
+               .ForMember(d => d.SubTotal,
+                opt => opt.MapFrom(o => Convert.ToString(o.SubTotal, new CultureInfo("es-MX"))))
+               .ForMember(d => d.ImpuestoTotal,
+                opt => opt.MapFrom(o => Convert.ToString(o.ImpuestoTotal, new CultureInfo("es-MX"))))
+               .ForMember(d => d.Total,
+                opt => opt.MapFrom(o => Convert.ToString(o.Total, new CultureInfo("es-MX"))))
+               .ForMember(d => d.FechaRegistro,
+                opt => opt.MapFrom(o => o.FechaRegistro.ToString("dd/MMMM/yyyy")));
 
+            CreateMap<VMVenta, Venta>()
+               .ForMember(destino => destino.VentaId,
+                opt=>opt.MapFrom(origen=>origen.VentaId.Equals("") ? Guid.Empty : new Guid(origen.VentaId)))
+               .ForMember(destino => destino.UsuarioId,
+                opt => opt.MapFrom(origen => origen.UsuarioId.Equals("") ? Guid.Empty : new Guid(origen.UsuarioId)))
+               .ForMember(destino => destino.IdTipoDocumentoVenta,
+                opt => opt.MapFrom(origen => origen.IdTipoDocumentoVenta.Equals("") ? Guid.Empty : new Guid(origen.IdTipoDocumentoVenta)))
+               .ForMember(d => d.SubTotal,
+                opt => opt.MapFrom(o => Convert.ToDecimal(o.SubTotal, new CultureInfo("es-MX"))))
+               .ForMember(d => d.ImpuestoTotal,
+                opt => opt.MapFrom(o => Convert.ToDecimal(o.ImpuestoTotal, new CultureInfo("es-MX"))))
+               .ForMember(d => d.Total,
+                opt => opt.MapFrom(o => Convert.ToDecimal(o.Total, new CultureInfo("es-MX"))));
+
+
+
+            #endregion
             #region Negocio
             CreateMap<Negocio, VMNegocio>()
                 .ForMember(d => d.PorcentajeImpuestos,
@@ -80,32 +111,7 @@ namespace MVCVentas.Utilidades.Automapper
 
             #endregion
 
-            #region Venta
-            CreateMap<Venta, VMVenta>()
-                .ForMember(d => d.TipoDocumentoVenta,
-                opt => opt.MapFrom(o => o.TipoDocumentosVentasNav.Descripcion))
-                .ForMember(d => d.Usuario,
-                opt => opt.MapFrom(o => o.UsuarioNav.Nombre))
-               .ForMember(d => d.SubTotal,
-                opt => opt.MapFrom(o => Convert.ToString(o.SubTotal, new CultureInfo("es-MX"))))
-               .ForMember(d => d.ImpuestoTotal,
-                opt => opt.MapFrom(o => Convert.ToString(o.ImpuestoTotal, new CultureInfo("es-MX"))))
-               .ForMember(d => d.Total,
-                opt => opt.MapFrom(o => Convert.ToString(o.Total, new CultureInfo("es-MX"))))
-               .ForMember(d => d.FechaRegistro,
-                opt => opt.MapFrom(o => o.FechaRegistro.ToString("dd/MMMM/yyyy")));
 
-            CreateMap<VMVenta, Venta>()
-               .ForMember(d => d.SubTotal,
-                opt => opt.MapFrom(o => Convert.ToDecimal(o.SubTotal, new CultureInfo("es-MX"))))
-               .ForMember(d => d.ImpuestoTotal,
-                opt => opt.MapFrom(o => Convert.ToDecimal(o.ImpuestoTotal, new CultureInfo("es-MX"))))
-               .ForMember(d => d.Total,
-                opt => opt.MapFrom(o => Convert.ToDecimal(o.Total, new CultureInfo("es-MX"))));
-
-
-
-            #endregion
 
             #region DetalleDeVenta
             CreateMap<DetalleVenta, VMDetalleVenta>()

@@ -18,7 +18,7 @@ $(document).ready(function () {
             "datatype": "json"
         },
         "columns": [
-            { "data": "categoriaId", "visible": true, "searchale": false },
+            { "data": "categoriaId", "visible": false, "searchale": false },
             { "data": "descripcion" },
             {
                 "data": "esActivo", render: function (data) {
