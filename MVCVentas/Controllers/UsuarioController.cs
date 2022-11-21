@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVCVentas.Models.ViewModel;
 using MVCVentas.Utilidades.Response;
@@ -8,6 +9,7 @@ using SistemaVentas.BLL.Interfaces;
 
 namespace MVCVentas.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly IMapper _mapper;

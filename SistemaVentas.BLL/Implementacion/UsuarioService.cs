@@ -175,7 +175,7 @@ namespace SistemaVentas.BLL.Implementacion
         {
             string clave_encriptada = _utilidades.ConversionSha256(clave);
 
-            Usuario usuarioEncontrado = await _repository.Obtener(u => u.Correo.Equals(email) && u.Clave.Equals(clave));
+            Usuario usuarioEncontrado = await _repository.Obtener(u => u.Correo.Equals(email) && u.Clave.Equals(clave_encriptada));
 
             return usuarioEncontrado;
         }
@@ -238,7 +238,7 @@ namespace SistemaVentas.BLL.Implementacion
             {
                 Usuario UsuarioEncontrado = await _repository.Obtener(u => u.Correo == correo);
                 if (UsuarioEncontrado == null)
-                    throw new TaskCanceledException("No se encotró ningin usuario asociado");
+                    throw new TaskCanceledException("No se encotró ningun usuario asociado");
 
                 string claveGenerada = _utilidades.GenerarClave();
                 UsuarioEncontrado.Clave = _utilidades.ConversionSha256(claveGenerada);
@@ -273,7 +273,7 @@ namespace SistemaVentas.BLL.Implementacion
                     correo_enviado = await _correoService.EnviarCorre(correo, "Contraseña restablecida", htmlCorreo);
                 
                 if (!correo_enviado)
-                    throw new TaskCanceledException("No se pudo mandar el mendaje intenta de nuevo");
+                    throw new TaskCanceledException("No se pudo mandar el mensaje intenta de nuevo");
 
                 bool respuesta = await _repository.Editar(UsuarioEncontrado);
 

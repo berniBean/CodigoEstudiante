@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVCVentas.Models.ViewModel;
 using MVCVentas.Utilidades.Response;
 using SistemaVenta.BLL.Interfaces;
 using SistemaVenta.Entity.Models;
+using System.Security.Claims;
 
 namespace MVCVentas.Controllers
 {
+    [Authorize]
     public class VentaController : Controller
     {
         private readonly ITipoDocumentoService _DocService;
@@ -57,9 +60,12 @@ namespace MVCVentas.Controllers
 
             try
             {
-                
+                ClaimsPrincipal claimUser = HttpContext.User;
 
-                modelo.UsuarioId = "E2D0F97D-2EF8-44FB-89B0-08DDEE02CBB6";
+                string idUser = claimUser.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .Select(c => c.Value).SingleOrDefault();
+
+                modelo.UsuarioId = idUser;
                 modelo.VentaId = Guid.NewGuid().ToString();
 
                 var venta = await _VentaService.Registrar(_mapper.Map<Venta>(modelo));

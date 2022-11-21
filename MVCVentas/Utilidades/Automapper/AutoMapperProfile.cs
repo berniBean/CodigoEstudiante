@@ -29,6 +29,7 @@ namespace MVCVentas.Utilidades.Automapper
                 opt => opt.Ignore());
 
             #endregion
+            
             #region Venta
             CreateMap<Venta, VMVenta>()
                 .ForMember(d => d.TipoDocumentoVenta,
@@ -61,6 +62,7 @@ namespace MVCVentas.Utilidades.Automapper
 
 
             #endregion
+            
             #region Negocio
             CreateMap<Negocio, VMNegocio>()
                 .ForMember(d => d.PorcentajeImpuestos,
@@ -110,8 +112,6 @@ namespace MVCVentas.Utilidades.Automapper
             CreateMap<TipoDocumentoVenta, VMTipoDocumentoDeVenta>().ReverseMap();
 
             #endregion
-
-
 
             #region DetalleDeVenta
             CreateMap<DetalleVenta, VMDetalleVenta>()

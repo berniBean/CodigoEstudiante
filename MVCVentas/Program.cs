@@ -1,6 +1,7 @@
 using MVCVentas.Utilidades.Automapper;
 using SistemaVenta.IOC;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews()
     .AddJsonOptions(op=>op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+    opt =>
+    {
+        opt.LoginPath = "/Acceso/Loggin"; opt.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 builder.Services.InyectarDependencia(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 var app = builder.Build();
@@ -26,10 +33,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Acceso}/{action=Loggin}/{id?}");
 
 app.Run();
